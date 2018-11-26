@@ -3,6 +3,7 @@ package homework.Netcracker.swing;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -21,7 +22,10 @@ public class storageLibraryDesktop {
     public storageLibraryDesktop() {
         nameFile = "storage";
         formatFile = ".json";
-        pathToStorage = storageLibraryDesktop.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+//        pathToStorage = storageLibraryDesktop.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String s = File.separator;
+        pathToStorage = Paths.get("").toAbsolutePath().toString() + s + "src"
+                + s + "java" + s + "homework" + s + "Netcracker" + s;
         path = pathToStorage + nameFile + formatFile;
     }
 
