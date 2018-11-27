@@ -24,8 +24,8 @@ public class storageLibraryDesktop {
         formatFile = ".json";
 //        pathToStorage = storageLibraryDesktop.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String s = File.separator;
-        pathToStorage = Paths.get("").toAbsolutePath().toString() + s + "src"
-                + s + "java" + s + "homework" + s + "Netcracker" + s;
+        pathToStorage = Paths.get("").toAbsolutePath().toString() + s + "src" + s + "main"
+                + s + "java" + s + "homework" + s + "Netcracker" + s + "swing" + s;
         path = pathToStorage + nameFile + formatFile;
     }
 
