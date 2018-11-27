@@ -70,7 +70,7 @@ public class LibraryDesktop extends JFrame {
     }
 
     private void saveToStorageTable(ActionEvent e) {
-        storageLibraryDesktop storage = new storageLibraryDesktop();
+        StorageLibraryDesktop storage = new StorageLibraryDesktop();
         storage.saveStorage2(bookModel.getBooks());
         bar.getSaveChanges().setEnabled(false);
     }

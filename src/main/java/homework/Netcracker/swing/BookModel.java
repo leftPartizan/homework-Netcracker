@@ -17,7 +17,7 @@ public class BookModel extends AbstractTableModel {
     }
 
     public BookModel() {
-        storageLibraryDesktop storage = new storageLibraryDesktop();
+        StorageLibraryDesktop storage = new StorageLibraryDesktop();
         books = storage.loadStorage2();
     }
 

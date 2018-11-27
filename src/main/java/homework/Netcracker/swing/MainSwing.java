@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mainSwing {
+public class MainSwing {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 //        List<Book> books = new ArrayList();
 //        Book b = new Book("1984", new Author("George Orwell", "dominator@mail.ru","male"),
@@ -20,9 +20,9 @@ public class mainSwing {
 //        books.add(b);
 //        books.add(c);
 //        books.add(d);
-//        storageLibraryDesktop desktop = new storageLibraryDesktop();
+//        StorageLibraryDesktop desktop = new StorageLibraryDesktop();
 //        desktop.saveStorage2(books);
-//        storageLibraryDesktop desktop = new storageLibraryDesktop();
+//        StorageLibraryDesktop desktop = new StorageLibraryDesktop();
 //        System.out.println(desktop.getPath());
     }
 }

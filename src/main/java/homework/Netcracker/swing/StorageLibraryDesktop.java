@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 
-public class storageLibraryDesktop {
+public class StorageLibraryDesktop {
 
 //    private String pathToStorage = "C:\\Users\\?\\Desktop\\Netracker\\";
     private String pathToStorage;
@@ -19,7 +19,7 @@ public class storageLibraryDesktop {
         return path;
     }
 
-    public storageLibraryDesktop() {
+    public StorageLibraryDesktop() {
         nameFile = "storage";
         formatFile = ".json";
 //        pathToStorage = storageLibraryDesktop.class.getProtectionDomain().getCodeSource().getLocation().getPath();
