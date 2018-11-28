@@ -9,28 +9,32 @@ import java.util.List;
 
 public class LibraryDesktop extends JFrame {
 
-    Book bookNew = new Book("name", new Author("name", "1@mail.ru", "m"),
-            "a", "rus", 100, 1);
-
-
     private DialogBook dialog;
     private BookModel bookModel;
     private JTable table ;
     private MenuBarSouth bar;
     private InputNameBookDialog deleteBookDialog;
     private InputNameBookDialog changBookDialog;
+    private int indexBook;
+    PopupMenuTable popupMenuTable;
 
     public LibraryDesktop() {
         super("library");
-        this.setSize(450, 250);
+        this.setSize(650, 250);
         this.setLocation(250, 100);
 
+        indexBook = -1;
         bookModel = new BookModel();
         table = new JTable(bookModel);
+        popupMenuTable = new PopupMenuTable(table);
+        table.setComponentPopupMenu(popupMenuTable);
+        table.setRowSelectionInterval(0,0);
+
         dialog = new DialogBook(this);
         bar = new MenuBarSouth(table);
         deleteBookDialog = new InputNameBookDialog();
         changBookDialog = new InputNameBookDialog();
+
         addAllListeners();
 
         add(bar, BorderLayout.SOUTH);
@@ -41,8 +45,14 @@ public class LibraryDesktop extends JFrame {
     }
 
     private void addAllListeners(){
-//        dialog.getPanelSouth().getButtonOk().addActionListener(this::buttonOKTest); // добавить книгу
-        dialog.getPanelSouth().getButtonOk().addActionListener(this::buttonOK);
+        popupMenuTable.addListenersPopupMenu(bar.getSaveChanges());
+
+        dialog.getPanelSouth().getButtonOk().addActionListener(this::buttonNewBookOK);
+
+        dialog.addWindowListener(new WindowOpenDialogNewBook());
+        deleteBookDialog.addWindowListener(new WindowOpenDialogDeleteBook());
+        changBookDialog.addWindowListener(new WindowOpenDialogChangeBook());
+
         deleteBookDialog.getPanelSouth().getButtonOk().addActionListener(this::deleteBookPressOk);
         changBookDialog.getPanelSouth().getButtonOk().addActionListener(this::changeDataBook);
         setdefultStateFieldsDialog(); // при наводке на поле - сброс цвета на белое
@@ -56,7 +66,6 @@ public class LibraryDesktop extends JFrame {
     public BookModel getBookModel() {
         return bookModel;
     }
-
     private void buttonOKTest(ActionEvent e) {
         JButton trigger = dialog.getPanelCenter().getTriggerNewBook();
         trigger.setSelected(!trigger.isSelected());
@@ -75,8 +84,11 @@ public class LibraryDesktop extends JFrame {
         bar.getSaveChanges().setEnabled(false);
     }
 
-    private void buttonOK(ActionEvent e) {
-
+    private void buttonNewBookOK(ActionEvent e) {
+        if (indexBook != -1) {
+            bookModel.deleteBook(indexBook);
+            indexBook = -1;
+        }
         DialogBook.PanelCenter panelCenter = dialog.getPanelCenter();
         String nameBook = panelCenter.getFieldName().getText();
         String genre = panelCenter.getFieldGenre().getText();
@@ -87,22 +99,14 @@ public class LibraryDesktop extends JFrame {
         String nameAuthor = panelCenter.getFieldAuthorName().getText();
         String emailAuthor = panelCenter.getFieldAuthorEmail().getText();
         String genderAuthor = panelCenter.getGroupGender().getSelection().getActionCommand();
-        ArrayList<JTextField> fieldsArray = panelCenter.fieldsArray(new ArrayList<>());
 
-//        проверка на пустое поле
-        boolean testDone = true;
-        for (JTextField x : fieldsArray) {
-            if (x.getText().isEmpty()) {
-                x.setBackground(Color.RED);
-                x.setToolTipText("field is Empty");
-                testDone = false;
-            }
-        };
-//         проверка на корректность данных
-        boolean testDone2 = panelCenter.checkIncorrectData(nameBook, genre, numberOfpages, count, nameAuthor, emailAuthor);
+        //проверка на пустое поле
+        boolean testDone = panelCenter.checkEmptyField();
+        //проверка на корректность данных
+        boolean testDone2 = panelCenter.checkIncorrectData();
         if (testDone && testDone2) {
             dialog.getPanelCenter().getTriggerNewBook().setSelected(true);
-            bookModel.addBook(new Book(nameAuthor, new Author(nameAuthor, emailAuthor, genderAuthor),
+            bookModel.addBook(new Book(nameBook, new Author(nameAuthor, emailAuthor, genderAuthor),
                     genre, language, Integer.valueOf(numberOfpages), Integer.valueOf(count)));
             dialog.dispose();
             bar.getSaveChanges().setEnabled(true);
@@ -110,7 +114,7 @@ public class LibraryDesktop extends JFrame {
     }
 
     private void setdefultStateFieldsDialog() {
-        ArrayList<JTextField> fieldArray = dialog.getPanelCenter().fieldsArray(new ArrayList<>());
+        ArrayList<JTextField> fieldArray = dialog.getPanelCenter().fieldsArray();
         for (JTextField x : fieldArray) {
             x.addFocusListener(new FocusListener() {
                 @Override
@@ -179,17 +183,36 @@ public class LibraryDesktop extends JFrame {
                 for (int i=0; i < bookModel.getColumnCount(); i++){
                     bookData[i] = String.valueOf(bookModel.getValueAt(bookFoundIndex, i));
                 }
-                dialog.getPanelCenter().setPanelCenterFields(bookData);
-                books.remove(bookFoundIndex);
                 changBookDialog.dispose();
+                dialog.getPanelCenter().setPanelCenterFields(bookData);
                 dialog.setVisible(true);
-                bar.getSaveChanges().setEnabled(true);
+                indexBook = bookFoundIndex;
             }
             else {
                 warnings.setText("not found");
             }
         }
     }
+
+    class WindowOpenDialogNewBook extends WindowAdapter {
+        public void windowActivated(WindowEvent e) {
+            dialog.getPanelCenter().fieldsArray().forEach(x -> {x.setText(""); x.setBackground(Color.WHITE);});
+            dialog.getPanelCenter().warningsLabelArray().forEach(x -> x.setText(""));
+        }
+    };
+
+    class WindowOpenDialogDeleteBook extends WindowAdapter {
+        public void windowActivated(WindowEvent e) {
+            deleteBookDialog.getPanelCenter().getTextField().setText("");
+        }
+    };
+
+    class WindowOpenDialogChangeBook extends WindowAdapter {
+        public void windowActivated(WindowEvent e) {
+            changBookDialog.getPanelCenter().getTextField().setText("");
+        }
+    };
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

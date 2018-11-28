@@ -31,6 +31,11 @@ public class BookModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
+    public void deleteBook(int index) {
+        books.remove(index);
+        this.fireTableDataChanged();
+    }
+
     public List<Book> getBooks() {
         return books;
     }

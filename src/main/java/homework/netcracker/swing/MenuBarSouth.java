@@ -11,9 +11,9 @@ public class MenuBarSouth extends JMenuBar {
     private BookModel bookModel;
 
     private JButton saveChanges = new JButton("Save changes");
-    private JMenuItem newBook = new JMenuItem("new Book");
-    private JMenuItem delete = new JMenuItem("delete");
-    private JMenuItem changeDataBook = new JMenuItem("changeDataBook");
+    private JMenuItem newBook = new JMenuItem("New book");
+    private JMenuItem delete = new JMenuItem("Delete");
+    private JMenuItem changeDataBook = new JMenuItem("Change book data");
 
     public JButton getSaveChanges() {
         return saveChanges;

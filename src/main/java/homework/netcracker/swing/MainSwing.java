@@ -2,11 +2,13 @@ package homework.netcracker.swing;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainSwing {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -24,5 +26,15 @@ public class MainSwing {
 //        desktop.saveStorage2(books);
 //        StorageLibraryDesktop desktop = new StorageLibraryDesktop();
 //        System.out.println(desktop.getPath());
+
+//        final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+//        final String NUMBERS_REGEX = "^[1-9][0-9]{0,2}$";
+//        final String NAME_REGEX = "\\`|\\~|\\!|\\@|\\#|\\$|\\%|\\^|\\&|\\*|\\(|\\)|\\" +
+//                "+|\\=|\\[|\\{|\\]|\\}|\\||\\\\|\\'|\\<|\\,|\\.|\\>|\\?|\\/|\\\"\"|\\;|\\:|";
+//        Pattern email = Pattern.compile(EMAIL_REGEX);
+//        boolean matcher = Pattern.matches(NAME_REGEX, "/");
+//
+//        System.out.println(matcher);
+
     }
 }

@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 
 public class DialogBook extends JDialog{
 
     private PanelCenter panelCenter;
     private PanelSouth panelSouth;
+    private LibraryDesktop owner;
 
     public DialogBook(LibraryDesktop owner) {
         super(owner);
@@ -30,6 +33,7 @@ public class DialogBook extends JDialog{
     public PanelSouth getPanelSouth() {
         return panelSouth;
     }
+
 
     class PanelCenter extends JPanel {
         //главный фрейм
@@ -67,8 +71,29 @@ public class DialogBook extends JDialog{
         private JRadioButton female = new JRadioButton("female");
         private ButtonGroup groupGender = new ButtonGroup();
 
+        private JLabel checkName = new JLabel();
+        private JLabel checkGenre = new JLabel();
+        private JLabel checkAuthorName = new JLabel();
+        private JLabel checkAuthorEmail = new JLabel();
+        private JLabel checkNumberOfPages = new JLabel();
+        private JLabel checkCount = new JLabel();
+        private JLabel checkLanguage = new JLabel();
 
-        public ArrayList<JTextField> fieldsArray(ArrayList<JTextField> fieldsArray) {
+        public ArrayList<JLabel> warningsLabelArray() {
+            ArrayList<JLabel> warningsLabelArray = new ArrayList<>();
+            // поля книги
+            warningsLabelArray.add(checkName);
+            warningsLabelArray.add(checkGenre);
+            warningsLabelArray.add(checkNumberOfPages);
+            warningsLabelArray.add(checkCount);
+            // поля автора книги
+            warningsLabelArray.add(checkAuthorName);
+            warningsLabelArray.add(checkAuthorEmail);
+            return warningsLabelArray;
+        }
+
+        public ArrayList<JTextField> fieldsArray() {
+            ArrayList<JTextField> fieldsArray = new ArrayList<JTextField>();
             // поля книги
             fieldsArray.add(fieldName);
             fieldsArray.add(fieldGenre);
@@ -83,8 +108,8 @@ public class DialogBook extends JDialog{
         public PanelCenter(LibraryDesktop owner) {
             BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
             setLayout(boxLayout);
-            add(new panelBook());
-            add(new panelAuthor());
+            add(new PanelBook());
+            add(new PanelAuthor());
             this.owner = owner;
         }
 
@@ -140,12 +165,13 @@ public class DialogBook extends JDialog{
             return fieldCount;
         }
 
-        class panelBook extends JPanel {
+        class PanelBook extends JPanel {
 
-            public panelBook() {
+            public PanelBook() {
                 GroupLayout gl = new GroupLayout(this);
                 setLayout(gl);
                 setLayoutPanel(gl);
+                checkLanguage.setVisible(false);
             }
 
             private void setLayoutPanel(GroupLayout gl){
@@ -155,29 +181,32 @@ public class DialogBook extends JDialog{
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.TRAILING).
                                 addComponent(labelName).addComponent(labelGenre).addComponent(labelLanguage).
                                 addComponent(labelNumberOfPages).addComponent(labelCount)).
-                        addGroup(gl.createParallelGroup(GroupLayout.Alignment.LEADING).
+                        addGroup(gl.createParallelGroup(GroupLayout.Alignment.CENTER).
                                 addComponent(fieldName).addComponent(fieldGenre).addComponent(comboBoxLanguage).
-                                addComponent(fieldNumberOfPages).addComponent(fieldCount)));
+                                addComponent(fieldNumberOfPages).addComponent(fieldCount)).
+                        addGroup(gl.createParallelGroup(GroupLayout.Alignment.LEADING).
+                                addComponent(checkName).addComponent(checkGenre).addComponent(checkLanguage).
+                                addComponent(checkNumberOfPages).addComponent(checkCount)));
 
                 gl.setVerticalGroup(gl.createSequentialGroup().
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelName).addComponent(fieldName)).
+                                addComponent(labelName).addComponent(fieldName).addComponent(checkName)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelGenre).addComponent(fieldGenre)).
+                                addComponent(labelGenre).addComponent(fieldGenre).addComponent(checkGenre)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelLanguage).addComponent(comboBoxLanguage)).
+                                addComponent(labelLanguage).addComponent(comboBoxLanguage).addComponent(checkLanguage)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelNumberOfPages).addComponent(fieldNumberOfPages)).
+                                addComponent(labelNumberOfPages).addComponent(fieldNumberOfPages).addComponent(checkNumberOfPages)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelCount).addComponent(fieldCount)));
+                                addComponent(labelCount).addComponent(fieldCount).addComponent(checkCount)));
             }
 
         }
 
-        class panelAuthor extends JPanel {
+        class PanelAuthor extends JPanel {
             private JPanel panelGender = new JPanel();
 
-            public panelAuthor() {
+            public PanelAuthor() {
                 setBorder(BorderFactory.createTitledBorder("Author"));
                 panelGender.setLayout(new FlowLayout());
                 male.setActionCommand("male");
@@ -201,77 +230,128 @@ public class DialogBook extends JDialog{
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.TRAILING).
                                 addComponent(labelAuthorName).addComponent(labelAuthorEmail).addComponent(labelAuthorGender)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.LEADING).
-                                addComponent(fieldAuthorName).addComponent(fieldAuthorEmail).addComponent(panelGender)));
+                                addComponent(fieldAuthorName).addComponent(fieldAuthorEmail).addComponent(panelGender)).
+                        addGroup(gl.createParallelGroup(GroupLayout.Alignment.TRAILING).
+                            addComponent(checkAuthorName).addComponent(checkAuthorEmail)));
 
                 gl.setVerticalGroup(gl.createSequentialGroup().
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelAuthorName).addComponent(fieldAuthorName)).
+                                addComponent(labelAuthorName).addComponent(fieldAuthorName).addComponent(checkAuthorName)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
-                                addComponent(labelAuthorEmail).addComponent(fieldAuthorEmail)).
+                                addComponent(labelAuthorEmail).addComponent(fieldAuthorEmail).addComponent(checkAuthorEmail)).
                         addGroup(gl.createParallelGroup(GroupLayout.Alignment.BASELINE).
                                 addComponent(labelAuthorGender).addComponent(panelGender)));
             }
         }
 
-        public boolean checkIncorrectData(String nameBook, String genre, String numberOfpages,
-                                           String count, String nameAuthor, String emailAuthor) {
+        public boolean checkEmptyField() {
+            ArrayList<JTextField> fieldsArray = fieldsArray();
+            ArrayList<JLabel> warningsLabelArray = warningsLabelArray();
+            boolean testDone = true;
+            warningsLabelArray.forEach(x -> x.setText(""));
+
+            for (JTextField x : fieldsArray) {
+                if (x.getText().isEmpty()) {
+                    x.setBackground(Color.RED);
+                    testDone = false;
+                }
+            }
+
+            for (JLabel x : warningsLabelArray) {
+                if (x.getText().isEmpty()) {
+                    x.setText("field is empty)))");
+                    x.setVisible(true);
+                }
+                else{
+                    System.out.println(x.getText());
+                    x.setVisible(false);
+                    x.setText("");
+                }
+            }
+            return testDone;
+        }
+
+        public boolean checkIncorrectData() {
+            String nameBook = fieldName.getText();
+            String genre = fieldGenre.getText();
+            String numberOfpages = fieldNumberOfPages.getText();
+            String count = fieldCount.getText();
+
+            String nameAuthor = fieldAuthorName.getText();
+            String emailAuthor = fieldAuthorEmail.getText();
+
+            final String NAME_REGEX = "\\`|\\~|\\!|\\@|\\#|\\$|\\%|\\^|\\&|\\*|\\(|\\)|\\" +
+                    "+|\\=|\\[|\\{|\\]|\\}|\\||\\\\|\\'|\\<|\\,|\\.|\\>|\\?|\\/|\\\"\"|\\;|\\:|\\s"; // no
+            final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$"; // yes
+            final String NUMBERS_REGEX = "^[1-9][0-9]{0,2}$"; // yes
+            final String NAME_AUTHOR_REGEX = "^([a-zA-Z]{2,}\\s[a-zA-z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)"; //yes
+
             boolean check = true;
-            boolean a1 = nameBook.isEmpty();
-            if (!nameBook.isEmpty() && ! Check.isName(nameBook)) {
-                fieldName.setToolTipText("enter correct name");
-                fieldName.setBackground(Color.RED);
-                check = false;
+            if (! nameBook.isEmpty()) {
+                if (Pattern.matches(NAME_REGEX, nameBook)) {
+                    checkName.setText("enter correct name");
+                    checkName.setVisible(true);
+                    fieldName.setBackground(Color.RED);
+                    check = false;
+                }
+                else { checkName.setVisible(false);}
             }
 
-            if (!genre.isEmpty() && ! Check.isName(genre)) {
-                fieldGenre.setToolTipText("enter correct genres");
-                fieldGenre.setBackground(Color.RED);
-                check = false;
+            if (! genre.isEmpty()) {
+                if (! Pattern.matches(NAME_REGEX, genre)) {
+                    checkGenre.setText("enter correct genre");
+                    checkGenre.setVisible(true);
+                    fieldGenre.setBackground(Color.RED);
+                    check = false;
+                }
+                else {checkGenre.setVisible(false);}
             }
 
-            if (!emailAuthor.isEmpty() && ! Check.isEmail(emailAuthor)) {
-                fieldAuthorEmail.setToolTipText("enter correct Email");
-                fieldAuthorEmail.setBackground(Color.RED);
-                check = false;
+            if (! emailAuthor.isEmpty() ) {
+                if (! Pattern.matches(EMAIL_REGEX, emailAuthor)){
+                    checkAuthorEmail.setText("enter correct email");
+                    checkAuthorEmail.setVisible(true);
+                    fieldAuthorEmail.setBackground(Color.RED);
+                    check = false;
+                }
+                else {checkAuthorEmail.setVisible(false);}
             }
 
-            if (!nameAuthor.isEmpty() && ! Check.isName(nameAuthor)) {
-                fieldAuthorName.setToolTipText("enter correct name");
-                fieldAuthorName.setBackground(Color.RED);
-                check = false;
+            if (!nameAuthor.isEmpty()) {
+                if (! Pattern.matches(NAME_AUTHOR_REGEX, nameAuthor)) {
+                    checkAuthorName.setText("enter correct name");
+                    checkAuthorName.setVisible(true);
+                    fieldAuthorName.setBackground(Color.RED);
+                    check = false;
+                }
+                else {checkAuthorName.setVisible(false);}
             }
 
-            if (!numberOfpages.isEmpty() && !Check.isInteger(numberOfpages)) {
-                fieldNumberOfPages.setToolTipText("enter positive integer");
-                fieldNumberOfPages.setBackground(Color.RED);
-                check = false;
-            }
-            if (!numberOfpages.isEmpty() && Integer.valueOf(numberOfpages) <= 0){
-                fieldNumberOfPages.setToolTipText("enter positive integer");
-                fieldNumberOfPages.setBackground(Color.RED);
-                check = false;
+            if (!numberOfpages.isEmpty()) {
+                if (! Pattern.matches(NUMBERS_REGEX, numberOfpages)) {
+                    checkNumberOfPages.setText("enter positive integer");
+                    checkNumberOfPages.setVisible(true);
+                    fieldNumberOfPages.setBackground(Color.RED);
+                    check = false;
+                }
+                else {checkNumberOfPages.setVisible(false);}
             }
 
-            if (!count.isEmpty() && !Check.isInteger(count)) {
-                fieldCount.setToolTipText("enter positive integer");
-                fieldCount.setBackground(Color.RED);
-                check = false;
+            if (!count.isEmpty()) {
+                if (! Pattern.matches(NUMBERS_REGEX, numberOfpages)) {
+                    checkCount.setText("enter positive integer");
+                    checkCount.setVisible(true);
+                    fieldCount.setBackground(Color.RED);
+                    check = false;
+                }
+                else {checkCount.setVisible(false);}
             }
-            if (!count.isEmpty() && Integer.valueOf(count) <= 0) {
-                fieldCount.setToolTipText("enter positive integer");
-                fieldCount.getToolTipText();
-                fieldCount.setBackground(Color.RED);
-                check = false;
-            }
+
             if (check) {
                 return true;
             }
             return false;
         }
-    }
-
-    private void closeDialog(ActionEvent e) {
-        dispose();
     }
 
 }

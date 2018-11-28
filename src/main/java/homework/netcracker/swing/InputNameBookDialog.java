@@ -34,7 +34,6 @@ public class InputNameBookDialog extends JDialog{
         private JLabel warnings = new JLabel();
 
         public PanelCenter() {
-//            BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
             GridLayout gl =new GridLayout(3,1);
             setLayout(gl);
 
