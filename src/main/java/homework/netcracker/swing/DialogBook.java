@@ -2,7 +2,6 @@ package homework.netcracker.swing;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -283,7 +282,7 @@ public class DialogBook extends JDialog{
             final String NAME_REGEX = "\\`|\\~|\\!|\\@|\\#|\\$|\\%|\\^|\\&|\\*|\\(|\\)|\\" +
                     "+|\\=|\\[|\\{|\\]|\\}|\\||\\\\|\\'|\\<|\\,|\\.|\\>|\\?|\\/|\\\"\"|\\;|\\:|\\s"; // no
             final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$"; // yes
-            final String NUMBERS_REGEX = "^[1-9][0-9]{0,2}$"; // yes
+            final String NUMBERS_REGEX = "^[1-9][0-9]{0,4}$"; // yes
             final String NAME_AUTHOR_REGEX = "^([a-zA-Z]{2,}\\s[a-zA-z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)"; //yes
 
             boolean check = true;
@@ -298,7 +297,7 @@ public class DialogBook extends JDialog{
             }
 
             if (! genre.isEmpty()) {
-                if (! Pattern.matches(NAME_REGEX, genre)) {
+                if (Pattern.matches(NAME_REGEX, genre)) {
                     checkGenre.setText("enter correct genre");
                     checkGenre.setVisible(true);
                     fieldGenre.setBackground(Color.RED);

@@ -7,12 +7,12 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MenuBarSouth extends JMenuBar {
-    private JMenu Menu = new JMenu("New");
+    private JMenu Menu = new JMenu("Menu");
     private BookModel bookModel;
 
     private JButton saveChanges = new JButton("Save changes");
     private JMenuItem newBook = new JMenuItem("New book");
-    private JMenuItem delete = new JMenuItem("Delete");
+    private JMenuItem delete = new JMenuItem("Delete book");
     private JMenuItem changeDataBook = new JMenuItem("Change book data");
 
     public JButton getSaveChanges() {

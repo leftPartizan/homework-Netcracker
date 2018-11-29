@@ -50,8 +50,8 @@ public class LibraryDesktop extends JFrame {
         dialog.getPanelSouth().getButtonOk().addActionListener(this::buttonNewBookOK);
 
         dialog.addWindowListener(new WindowOpenDialogNewBook());
-        deleteBookDialog.addWindowListener(new WindowOpenDialogDeleteBook());
-        changBookDialog.addWindowListener(new WindowOpenDialogChangeBook());
+        deleteBookDialog.addWindowListener(new WindowCloseDialogDeleteBook());
+        changBookDialog.addWindowListener(new WindowClosedDialogChangeBook());
 
         deleteBookDialog.getPanelSouth().getButtonOk().addActionListener(this::deleteBookPressOk);
         changBookDialog.getPanelSouth().getButtonOk().addActionListener(this::changeDataBook);
@@ -195,20 +195,21 @@ public class LibraryDesktop extends JFrame {
     }
 
     class WindowOpenDialogNewBook extends WindowAdapter {
-        public void windowActivated(WindowEvent e) {
+        public void windowClosed(WindowEvent e) {
             dialog.getPanelCenter().fieldsArray().forEach(x -> {x.setText(""); x.setBackground(Color.WHITE);});
             dialog.getPanelCenter().warningsLabelArray().forEach(x -> x.setText(""));
         }
+
     };
 
-    class WindowOpenDialogDeleteBook extends WindowAdapter {
-        public void windowActivated(WindowEvent e) {
+    class WindowCloseDialogDeleteBook extends WindowAdapter {
+        public void windowClosed(WindowEvent e) {
             deleteBookDialog.getPanelCenter().getTextField().setText("");
         }
     };
 
-    class WindowOpenDialogChangeBook extends WindowAdapter {
-        public void windowActivated(WindowEvent e) {
+    class WindowClosedDialogChangeBook extends WindowAdapter {
+        public void windowClosed(WindowEvent e) {
             changBookDialog.getPanelCenter().getTextField().setText("");
         }
     };
