@@ -1,0 +1,53 @@
+body {
+    text-align: center;
+    background-image: url(JmjzwpuTWQI.jpg);
+    background-size: 100%;
+    font-family: "Comic Sans MS", sans-serif;
+}
+#title{
+    margin-bottom: 70px;
+    color: #ece493;
+    font: 60px Calibri, sans-serif;
+    text-shadow: #04131D 0 0 8px;
+}
+
+#form span{
+    color: black;
+    font:25px "Comic Sans MS", sans-serif;
+    font-weight: 900;
+}
+#form sup{
+    color: black;
+    font: 20px Calibri;
+    font-weight: 900;
+}
+input[type=number], select {
+    width: 1.5cm;
+    font: 20px Impact;
+    margin:1px 5px;
+}
+
+#table  {
+    margin-left: auto;
+    margin-right: auto;
+    overflow:auto;
+    border-collapse: collapse;
+    font-family: "Comic Sans MS", sans-serif;
+}
+#result {
+    margin-top: 50px;
+    position:relative;
+}
+#sub {
+    height:220px;
+    overflow:auto;
+}
+tr {
+    height: 30px;
+}
+th {
+    width:35%;
+}
+tbody tr:nth-child(even){background-color: #D2D9EB; color: #1C2430}
+thead tr {background-color: #04131D; color: #ece493}
+tbody tr:nth-child(odd){background-color: #8B9FCB; color: #1C2430}
