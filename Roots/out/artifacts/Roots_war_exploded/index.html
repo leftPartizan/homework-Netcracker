@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="utf-8">
+    <title>корни квадратного уравнения</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="addRow.js"></script>
+    <style>
+        @import url(styleRoots.css);
+    </style>
+</head>
+<body>
+<h1 id="title">Онлайн калькулятор. Решение квадратных уравнений.</h1>
+<form id="form">
+    <input  type="number" id="a" size="2" tabindex="1" name="a">
+    <span>x</span><sup>2</sup>&nbsp;+&nbsp;
+    <input  type="number" id="b" size="2" tabindex="2" name="b">
+    <span>x</span>&nbsp;+&nbsp;
+    <input type="number" id="c" size="2" tabindex="3" name="c">&nbsp;<span>=</span>&nbsp;<span>0</span>
+    <p><input type="submit" id="submit" value="Решить уравнение"></p>
+</form>
+
+<div id="result" >
+    <h1>результаты</h1>
+    <div id="sub">
+        <table id="table">
+            <thead>
+            <tr>
+                <th><span class="text">уравнение</span></th>
+                <th><span class="text">корни</span></th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
