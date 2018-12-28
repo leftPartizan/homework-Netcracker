@@ -23,7 +23,6 @@ public class gwt implements EntryPoint {
 
   public void onModuleLoad() {
       String root = Defaults.getServiceRoot();
-      root = root.replace("gwt/", "");
       Defaults.setServiceRoot(root);
 
       //создание элементов
