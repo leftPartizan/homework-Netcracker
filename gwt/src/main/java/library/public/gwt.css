@@ -1,0 +1,48 @@
+
+#body {
+  background-image: url("background.jpg") !important;
+  background-size: 100% ;
+  align-content: center ;
+  overflow: auto;
+  font-family: "Comic Sans MS";
+  font-size: medium;
+}
+
+#block-left{
+  paddding:1%;
+  margin:1%;
+  width:50%;height:550px;overflow:auto;float:left;
+  font-size: large;
+  align-content: center;
+  align-items: center;
+}
+
+#spisok {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+}
+#block-right{
+  margin: 1%;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  width:30%;height:550px;overflow:auto;float:right;
+}
+
+#block-right{
+  color: red;
+  font-size: 17px;
+}
+table {
+  align-content: center;
+  text-align: center;
+}
+#block-left table{
+  background-color:white;
+}
+#block-right table{
+  color:blue;
+  background:blanchedalmond;
+  font-size: 17px;
+}
