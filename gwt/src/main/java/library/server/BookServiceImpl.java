@@ -25,13 +25,9 @@ public class BookServiceImpl {
         BookList bookList = null;
         ObjectMapper mapper = new ObjectMapper();
 
-//        URL url = Thread.currentThread().getContextClassLoader().getResource("books.json");
-//        URL url = GWT.getModuleBaseForStaticFiles();
+        URL url = Thread.currentThread().getContextClassLoader().getResource("books.json");
         try {
-//            bookList = mapper.readValue(new FileInputStream(url.getPath()), BookList.class);
-            InputStream s = BookServiceImpl.class.getResourceAsStream("book.json");
-            String s2 = "a";
-            bookList = mapper.readValue(s, BookList.class);
+            bookList = mapper.readValue(new FileInputStream(url.getPath()), BookList.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
