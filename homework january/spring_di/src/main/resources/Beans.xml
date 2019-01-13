@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id = "Noname" class = "spring_di.Person">
+        <property name = "name" value = "Noname"/>
+        <property name="status" value = "sleep"/>
+    </bean>
+
+    <bean id ="Pikachu" class = "spring_di.Pikachu" parent = "Noname">
+        <property name = "name" value = "Pikachu"/>
+        <property name="attack" value = "Pukachu create lightning bolt!"/>
+    </bean>
+
+    <bean id="cat" class="spring_di.AnimalFactory"
+          factory-method="createAnimal">
+        <constructor-arg value="cat"/>
+    </bean>
+    <bean id="dog" class="spring_di.AnimalFactory"
+          factory-method="createAnimal">
+        <constructor-arg value="dog"/>
+    </bean>
+
+    <bean id="lion" class="spring_di.AnimalFactoryBean">
+        <property name="name" value="lion"></property>
+        <property name="gender" value="m"></property>
+    </bean>
+
+    <bean id="train" class="spring_di.Train">
+        <lookup-method name="createBoom" bean="Explosion"></lookup-method>
+    </bean>
+
+    <bean name="Explosion" class="spring_di.Boom">
+        <property name="damageRadius" value="100"></property>
+        <property name="description" value="Explosion!!!"></property>
+        <property name="type" value="spell"></property>
+    </bean>
+
+
+</beans>
